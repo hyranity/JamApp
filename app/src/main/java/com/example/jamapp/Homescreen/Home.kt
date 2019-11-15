@@ -28,6 +28,8 @@ class Home : Fragment() {
     ): View? {
 
         // Some code from https://stackoverflow.com/questions/30093111/findviewbyid-not-working-in-fragment
+        // Also with code from https://www.youtube.com/watch?v=67hthq6Y2J8
+
         val rootView =  inflater.inflate(R.layout.fragment_home, container, false) as View
 
         val recyclerView = rootView.findViewById(R.id.Recycler) as RecyclerView
@@ -38,6 +40,7 @@ class Home : Fragment() {
 
         val eventList = ArrayList<Event>()
 
+        // Dummy events data
         eventList.add(Event("TARUC Graduation Ceremony", "Dewan Utama, TARUC Main Campus"))
         eventList.add(Event("Anime Fiesta 2019", "Kuala Lumpur Convention Center (Hall 3)"))
         eventList.add(Event("Choral Exchange 2019", "Dewan Utama, TARUC Main Campus"))
