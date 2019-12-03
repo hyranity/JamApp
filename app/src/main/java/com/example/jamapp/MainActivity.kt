@@ -3,6 +3,7 @@ package com.example.jamapp
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -10,10 +11,12 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.jamapp.ui.main.SectionsPagerAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.adapter = sectionsPagerAdapter
 
-        val tabs: TabLayout = findViewById(R.id.tabs)
+        val tabs: TabLayout = tabs
 
         tabs.setupWithViewPager(viewPager)
 
@@ -48,6 +51,10 @@ class MainActivity : AppCompatActivity() {
 
         tabs.setSelectedTabIndicatorColor(Color.WHITE)
         tabs.setSelectedTabIndicatorGravity(TabLayout.INDICATOR_GRAVITY_STRETCH)
+
+        // Test link
+        val textView : TextView = findViewById(R.id.textView)
+        textView.movementMethod = LinkMovementMethod.getInstance()
 
         // To change icon colors
         /*
