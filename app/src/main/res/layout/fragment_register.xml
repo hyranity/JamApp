@@ -76,7 +76,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister"
+        android:onClick="performRegister"/>
 
     <Button
         android:id="@+id/backToLoginButton"
@@ -91,6 +92,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="redirectLogin"/>
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

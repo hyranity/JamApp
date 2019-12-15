@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "174310410649",
+    "firebase_url": "https://jamapp-1b0bb.firebaseio.com",
+    "project_id": "jamapp-1b0bb",
+    "storage_bucket": "jamapp-1b0bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174310410649:android:acd69efeee500a45ce6b08",
+        "android_client_info": {
+          "package_name": "com.example.jamapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174310410649-2d1k0g8p2eurctn6kvtc87l9hqq2tl18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfCy7h_B8KMLsebdIEZFx_YQ41pAkaKdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174310410649-2d1k0g8p2eurctn6kvtc87l9hqq2tl18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

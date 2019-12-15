@@ -1,7 +1,7 @@
 package com.example.jamapp
 
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -9,13 +9,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import android.widget.Toast
 import com.example.jamapp.ui.main.SectionsPagerAdapter
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -84,6 +82,18 @@ class MainActivity : AppCompatActivity() {
         val icons = arrayOf(R.drawable.accountwhite_24dp, R.drawable.accountwhite_24dp, R.drawable.accountwhite_24dp)
 
         return icons
+    }
+
+    public fun performLogout(view : View){
+      val  auth = FirebaseAuth.getInstance();
+        auth.signOut()
+
+        // redirect back to login screen
+        val intent = Intent(this, LandingActivity::class.java)
+        val toast = Toast.makeText(applicationContext, "Logged out successfully", Toast.LENGTH_SHORT)
+        toast.show()
+        startActivity(intent)
+        finish()
     }
 
 }
