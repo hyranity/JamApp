@@ -8,7 +8,9 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.example.jamapp.Model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 class LandingActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private var db = FirebaseDatabase.getInstance().getReference()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +57,16 @@ class LandingActivity : AppCompatActivity() {
         view.findNavController().navigate(R.id.action_login_to_register)
     }
 
+    // When user tap on Register
     public fun performRegister(view : View){
-        if(registerEmail.text.isBlank() || passwordRegister.text.isBlank()){
-            val toast = Toast.makeText(applicationContext, "Ensure email & password fields are filled in", Toast.LENGTH_SHORT)
+        if(registerEmail.text.isBlank() || passwordRegister.text.isBlank() || confirmPasswordRegister.text.isBlank() || registerName.text.isBlank()){
+            val toast = Toast.makeText(applicationContext, "Ensure all fields are filled in", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        if(passwordRegister.text.toString() != confirmPasswordRegister.text.toString()){
+            val toast = Toast.makeText(applicationContext, "Your passwords do not match.", Toast.LENGTH_SHORT)
             toast.show()
             return
         }
@@ -69,6 +79,13 @@ class LandingActivity : AppCompatActivity() {
                     val toast = Toast.makeText(applicationContext, "Account successfully created!", Toast.LENGTH_SHORT)
                     toast.show()
                     val user = auth.currentUser
+
+                    // Create user object
+                    var newUser = User(uid = user!!.uid, email = registerEmail.text.toString(), name = registerName.text.toString())
+
+                    // Store in firebase realtime db
+                    //val key = db.child("users").push().key
+                   db.child("users").child(user!!.uid).setValue(newUser)
                     redirectLogin(view)
                 } else{
                     Log.w("REGISTER FAILED", "Could not register user", task.exception)

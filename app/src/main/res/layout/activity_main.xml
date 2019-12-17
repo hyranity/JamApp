@@ -23,8 +23,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="36sp"
             android:textStyle="bold|italic"
-            app:fontFamily="@font/viga"
-            android:onClick="performLogout"/>
+            app:fontFamily="@font/viga"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
