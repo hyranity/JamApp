@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.jamapp.Homescreen.Home
 import com.example.jamapp.MyAccount
 import com.example.jamapp.R
+import com.example.jamapp.my_events
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
@@ -24,6 +25,9 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         return when(pos){
+            3 -> {
+                my_events()
+            }
             2 -> {
                 Home()
             }

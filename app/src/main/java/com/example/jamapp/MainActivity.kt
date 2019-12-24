@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         return icons
     }
 
+    public fun createEvent(view : View){
+        val intent = Intent(this, create_event::class.java)
+        startActivity(intent)
+    }
+
     public fun performLogout(view : View){
       val  auth = FirebaseAuth.getInstance();
         auth.signOut()

@@ -2,6 +2,7 @@ package com.example.jamapp.Homescreen
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jamapp.Model.Event
 import com.example.jamapp.R
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 
 /**
@@ -19,6 +21,10 @@ import com.example.jamapp.R
  * create an instance of this fragment.
  */
 class Home : Fragment() {
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db : DatabaseReference
+
+
 
     private lateinit var linearLayoutManager : LinearLayoutManager
 
@@ -26,6 +32,9 @@ class Home : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Initialize db
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseDatabase.getInstance().getReference("event")
 
         // Some code from https://stackoverflow.com/questions/30093111/findviewbyid-not-working-in-fragment
         // Also with code from https://www.youtube.com/watch?v=67hthq6Y2J8
@@ -37,17 +46,35 @@ class Home : Fragment() {
         linearLayoutManager = LinearLayoutManager(context)
 
         recyclerView.layoutManager = linearLayoutManager
-
-        val eventList = ArrayList<Event>()
-
-        // Dummy events data
-        eventList.add(Event("TARUC Graduation Ceremony", "Dewan Utama, TARUC Main Campus"))
-        eventList.add(Event("Anime Fiesta 2019", "Kuala Lumpur Convention Center (Hall 3)"))
-        eventList.add(Event("Choral Exchange 2019", "Dewan Utama, TARUC Main Campus"))
-        eventList.add(Event("Johann's Birthday", "BestHouseEver"))
-        val adapter = HomeEventAdapter(eventList)
-
+        val events = arrayListOf<Event>()
+        val adapter = HomeEventAdapter(events)
         recyclerView.adapter = adapter
+
+        // GET EVENTS
+        Log.d("EVENTLIST", "Loading events")
+        db.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(databaseError: DatabaseError) {
+                throw databaseError.toException()
+            }
+
+            // When events are added/deleted
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Clear the list first
+                events.clear()
+
+                Log.d("CHILD",dataSnapshot!!.children.count().toString())
+                // Get event data
+                for (item in dataSnapshot.children) {
+                    val event = item.getValue(Event::class.java) as Event
+                    Log.d("CHILD", "LOOPING")
+                    events.add(event)
+                }
+                // Update adapter
+                adapter.notifyDataSetChanged()
+            }
+        })
+
+
 
         // Inflate the layout for this fragment
         return rootView
