@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Event">
+    tools:context=".event_fragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -95,12 +95,13 @@
         android:layout_marginLeft="54dp"
         android:layout_marginBottom="42dp"
         android:background="@drawable/circle"
-        android:text="<"
+        android:text="@string/back_arrow"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="backToHome"/>
 
     <Button
         android:id="@+id/register_button"

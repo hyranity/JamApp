@@ -31,16 +31,16 @@ class create_event : AppCompatActivity() {
     public fun createEvent(view : View){
 
         // Create event object
-        var newEvent = Event( host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString())
+        var newEvent = Event( host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString(), description = createEventDescription.text.toString(), imageLink = createEventImageUrl.text.toString(), learnMoreLink = createEventWebLink.text.toString())
         dbRef.child("event").push().setValue(newEvent).addOnSuccessListener {
             // Show success message
-            val toast = Toast.makeText(applicationContext, "Event created successfully", Toast.LENGTH_SHORT)
-            Log.d("Event","Success")
+            val toast = Toast.makeText(applicationContext, "event_fragment created successfully", Toast.LENGTH_SHORT)
+            Log.d("event_fragment","Success")
             toast.show()
         }.addOnFailureListener {
             // Show success message
             val toast = Toast.makeText(applicationContext, "Could not create event", Toast.LENGTH_SHORT)
-            Log.d("Event","FAILED")
+            Log.d("event_fragment","FAILED")
 
             toast.show()
         }

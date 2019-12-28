@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jamapp.MainActivity
 import com.example.jamapp.Model.Event
 import com.example.jamapp.R
 import com.google.firebase.auth.FirebaseAuth
@@ -46,8 +47,9 @@ class Home : Fragment() {
         linearLayoutManager = LinearLayoutManager(context)
 
         recyclerView.layoutManager = linearLayoutManager
+
         val events = arrayListOf<Event>()
-        val adapter = HomeEventAdapter(events)
+        val adapter = HomeEventAdapter(events, context!!)
         recyclerView.adapter = adapter
 
         // GET EVENTS
