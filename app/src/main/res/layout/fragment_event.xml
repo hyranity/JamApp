@@ -117,7 +117,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="joinEvent"/>
+        android:onClick="imIn"/>
 
     <TextView
         android:id="@+id/event_date"

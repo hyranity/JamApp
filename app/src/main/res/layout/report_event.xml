@@ -71,7 +71,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="Reason"
-        android:inputType="textReason"
+        android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"

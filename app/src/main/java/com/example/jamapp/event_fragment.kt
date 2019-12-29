@@ -69,35 +69,6 @@ class event_fragment : Fragment() {
         return view
     }
 
-    // When I'm In button is pressed
-    fun imIn() {
-        // Get User object
-        val user = FirebaseAuth.getInstance().currentUser
-        val db = FirebaseDatabase.getInstance().reference
 
-        // Get Event object
-        val activity = activity as event_info
-        var event = activity.event
-
-        val ref = db.child("events").child(event.event_id).child("Attendees").child(user!!.uid)
-
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(databaseError : DatabaseError) {
-                Log.w("Error", databaseError.toString())
-            }
-
-            override fun onDataChange(snapshot : DataSnapshot) {
-                // Check if User hasn't joined Event
-                if (snapshot == null) {
-                    // Add User ID to Attendees in Event object
-                    db.child("events").child(event.event_id).child("Attendees").push().setValue(user!!.uid) // https://stackoverflow.com/a/40013420
-                // Check if User has joined Event
-                } else {
-                    // Remove User ID from Attendees in Event object
-                    snapshot.getRef().setValue(null) // https://stackoverflow.com/a/40070768
-                }
-            }
-        })
-    }
 
 }
