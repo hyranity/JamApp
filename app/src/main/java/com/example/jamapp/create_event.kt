@@ -64,10 +64,14 @@ class create_event : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         cal.time = sdf.parse(createEventDate.text.toString())
 
+        // create event id
+        val event_id = dbRef.child("event").push().key as String
 
         // Create event object
-        var newEvent = Event( host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString(), description = createEventDescription.text.toString(), imageLink = createEventImageUrl.text.toString(), learnMoreLink = createEventWebLink.text.toString(), date = createEventDate.text.toString())
-        dbRef.child("event").push().setValue(newEvent).addOnSuccessListener {
+        var newEvent = Event(event_id = event_id, host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString(), description = createEventDescription.text.toString(), imageLink = createEventImageUrl.text.toString(), learnMoreLink = createEventWebLink.text.toString(), date = createEventDate.text.toString())
+
+        // Store new event under new event id
+        dbRef.child("event").child(event_id).setValue(newEvent).addOnSuccessListener {
             // Show success message
             val toast = Toast.makeText(applicationContext, "event_fragment created successfully", Toast.LENGTH_SHORT)
             Log.d("event_fragment","Success")
