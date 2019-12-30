@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
 
+    <EditText
+        android:id="@+id/announce_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="text"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/announce_title" />
+
     <Button
         android:id="@+id/backToEventInfoBt"
         android:layout_width="50dp"
@@ -22,13 +39,13 @@
         android:onClick="backToEventInfo"/>
 
     <TextView
-        android:id="@+id/report_title"
+        android:id="@+id/create_announce_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
-        android:text="Report Event"
+        android:text="Announce"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -36,13 +53,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/email_title"
+        android:id="@+id/announcement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_weight="1"
         android:clickable="true"
-        android:text="You are reporting"
+        android:text="You are announcing"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -51,7 +68,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/report_event_title"
+        android:id="@+id/announce_event_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -62,16 +79,16 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_title" />
+        app:layout_constraintTop_toBottomOf="@+id/announcement" />
 
     <EditText
-        android:id="@+id/reason"
+        android:id="@+id/announce_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
-        android:hint="Reason"
+        android:hint="Title"
         android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
@@ -79,13 +96,12 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/report_event_title" />
+        app:layout_constraintTop_toBottomOf="@id/announce_event_title" />
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="submitReport"
         android:paddingLeft="20sp"
@@ -98,6 +114,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reason" />
+        app:layout_constraintTop_toBottomOf="@+id/announce_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
