@@ -25,8 +25,6 @@ class Home : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db : DatabaseReference
 
-
-
     private lateinit var linearLayoutManager : LinearLayoutManager
 
     override fun onCreateView(

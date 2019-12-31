@@ -1,20 +1,24 @@
-package com.example.jamapp
+package com.example.jamapp.MyEvents
 
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.fragment_my_events.view.*
-import kotlinx.android.synthetic.main.fragment_register.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jamapp.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 
 /**
  * A simple [Fragment] subclass.
  */
 class my_events : Fragment() {
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db : DatabaseReference
+
+    private lateinit var linearLayoutManager : LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,5 +31,7 @@ class my_events : Fragment() {
         return view
     }
 
-
+    fun createEvent(view : View) {
+        // tbc
+    }
 }

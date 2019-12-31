@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.jamapp.Homescreen.Home
 import com.example.jamapp.MyAccount
 import com.example.jamapp.R
-import com.example.jamapp.my_events
+import com.example.jamapp.MyEvents.my_events
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
