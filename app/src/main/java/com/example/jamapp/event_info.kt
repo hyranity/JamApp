@@ -52,7 +52,7 @@ class event_info : AppCompatActivity() {
     public fun isRegistered() : Boolean{
         var isRegistered = false
 
-       // Check if user already registered to this event or not
+        // Check if user already registered to this event or not
         val ref = db.child("event").child(event.event_id).child("Attendees").child(auth.currentUser!!.uid)
 
         ref.addValueEventListener(object : ValueEventListener {
