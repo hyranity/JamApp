@@ -86,7 +86,7 @@ class LandingActivity : AppCompatActivity() {
                     // Store in firebase realtime db
                     //val key = db.child("users").push().key
                    db.child("users").child(user!!.uid).setValue(newUser)
-                    redirectLogin(view)
+                    loginUser()
                 } else{
                     Log.w("REGISTER FAILED", "Could not register user", task.exception)
                     val toast = Toast.makeText(applicationContext, "Could not register account", Toast.LENGTH_SHORT)

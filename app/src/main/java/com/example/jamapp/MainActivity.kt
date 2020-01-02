@@ -46,13 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         tabs.setupWithViewPager(viewPager)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         //Set icons to the tab
         // Reference: https://medium.com/@droidbyme/android-material-design-tabs-tab-layout-with-swipe-884085ae80ff
         val icons = loadIcons()
