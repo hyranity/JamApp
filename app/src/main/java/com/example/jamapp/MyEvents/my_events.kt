@@ -34,16 +34,16 @@ class my_events : Fragment() {
         db = FirebaseDatabase.getInstance().reference
         val eventRef = db.child("event")
 
-        val rootView =  inflater.inflate(R.layout.fragment_home, container, false) as View
+        val rootView =  inflater.inflate(R.layout.fragment_my_events, container, false) as View
 
-        val recyclerView = rootView.findViewById(R.id.Recycler) as RecyclerView
+        val recyclerView = rootView.findViewById(R.id.MyEventsRecycler) as RecyclerView
 
         linearLayoutManager = LinearLayoutManager(context)
 
-        recyclerView.layoutManager = linearLayoutManager
+        recyclerView!!.layoutManager = linearLayoutManager
 
         val events = arrayListOf<Event>()
-        val adapter = HomeEventAdapter(events, context!!)
+        val adapter = MyEventsAdapter(events, context!!)
         recyclerView.adapter = adapter
 
         // Get events
@@ -60,21 +60,17 @@ class my_events : Fragment() {
                 // Get event data
                 for (item in dataSnapshot.children) {
                     val event = item.getValue(Event::class.java) as Event
-                    // Check if user has registered in that event
-                    if (isRegistered(event)) {
-                        // If yes, add that event to be displayed
-                        events.add(event)
-                    }
+                            events.add(event)
                 }
+
                 // Update adapter
                 adapter.notifyDataSetChanged()
             }
         })
 
 
-
         // Inflate the layout for this fragment
-        return view
+        return rootView
     }
 
     fun isRegistered(event : Event) : Boolean {

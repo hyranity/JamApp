@@ -15,11 +15,8 @@ import com.example.jamapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-
 /**
  * A simple [Fragment] subclass.
- * Use the [Home.newInstance] factory method to
- * create an instance of this fragment.
  */
 class Home : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -31,6 +28,7 @@ class Home : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Initialize db
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().getReference("event")
