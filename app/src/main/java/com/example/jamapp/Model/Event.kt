@@ -11,5 +11,6 @@ data class Event(
     val description : String = "",
     val imageLink : String = "",
     val learnMoreLink : String = "",
-    val date : String = ""
+    val date : String = "",
+    var attendanceCount : Int = 0
 ) : Serializable

@@ -68,7 +68,7 @@ class create_event : AppCompatActivity() {
         val event_id = dbRef.child("event").push().key as String
 
         // Create event object
-        var newEvent = Event(event_id = event_id, host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString(), description = createEventDescription.text.toString(), imageLink = createEventImageUrl.text.toString(), learnMoreLink = createEventWebLink.text.toString(), date = createEventDate.text.toString())
+        var newEvent = Event(event_id = event_id, host_id = auth.uid.toString(), title = createEventTitle.text.toString(), address = createEventVenue.text.toString(), description = createEventDescription.text.toString(), imageLink = createEventImageUrl.text.toString(), learnMoreLink = createEventWebLink.text.toString(), date = createEventDate.text.toString(), attendanceCount = 0)
 
         // Store new event under new event id
         dbRef.child("event").child(event_id).setValue(newEvent).addOnSuccessListener {

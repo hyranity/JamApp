@@ -50,7 +50,7 @@ class Home : Fragment() {
 
         // GET EVENTS
         Log.d("EVENTLIST", "Loading events")
-        db.addValueEventListener(object : ValueEventListener{
+        db.orderByChild("attendanceCount").addValueEventListener(object : ValueEventListener{
             override fun onCancelled(databaseError: DatabaseError) {
                 throw databaseError.toException()
             }
@@ -67,6 +67,9 @@ class Home : Fragment() {
                     Log.d("CHILD", "LOOPING")
                     events.add(event)
                 }
+
+                // Reverse order from highest attendance to lowest
+                events.reverse()
                 // Update adapter
                 adapter.notifyDataSetChanged()
             }

@@ -4,20 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.jamapp.Model.Event
 import com.example.jamapp.Model.Report
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_report_event.*
 
 class event_info : AppCompatActivity() {
-    // Get event object from passed inte nt
+    // Get event object from passed intent
     public lateinit var event : Event
 
     private lateinit var db : DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private var isRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,35 @@ class event_info : AppCompatActivity() {
 
         // Get extra
         event =  intent.getSerializableExtra("event") as Event
+
+        // Check if user already registered to this event or not
+        val ref = db.child("users").child(auth.currentUser!!.uid).child("Participating")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(databaseError : DatabaseError) {
+                Log.w("Error", databaseError.toString())
+            }
+
+            override fun onDataChange(snapshot : DataSnapshot) {
+                Log.d("Attendees","Checking for existence")
+
+                // Check if User hasn't joined Event
+                if (!snapshot.hasChild(event.event_id)) {
+                    Log.d("Attendees","User not registered")
+                    Log.d("Attendees","Registering user to event")
+                    isRegistered = false;
+                    register_button.setText("I'M IN!")
+
+                    // Check if User has joined Event
+                } else {
+                    Log.d("Attendees","User already registered")
+                    Log.d("Attendees","Removing user from event")
+                    isRegistered = true;
+                    register_button.setText("UNATTEND!")
+                }
+            }
+        })
+
 
         setContentView(R.layout.activity_event_info)
 
@@ -48,53 +81,54 @@ class event_info : AppCompatActivity() {
         finish()
     }
 
-    // Check if user is already attending the event or not
-    public fun isRegistered() : Boolean{
-        var isRegistered = false
-
-        // Check if user already registered to this event or not
-        val ref = db.child("event").child(event.event_id).child("Attendees").child(auth.currentUser!!.uid)
-
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(databaseError : DatabaseError) {
-                Log.w("Error", databaseError.toString())
-            }
-
-            override fun onDataChange(snapshot : DataSnapshot) {
-                Log.d("Attendees","Checking for existence")
-
-                // Check if User hasn't joined Event
-                if (!snapshot.exists()) {
-                    Log.d("Attendees","User not registered")
-                    isRegistered = false
-                    // Check if User has joined Event
-                } else {
-                    Log.d("Attendees","User already registered")
-                    isRegistered = true
-                }
-            }
-        })
-
-        return isRegistered
-    }
-
     // When I'm In button is pressed
     public fun imIn(view : View) {
+       if(isRegistered){
+           unregisterUser()
+           isRegistered = false
+           register_button.setText("I'M IN!")
+
+           // Decrease count in db
+           event.attendanceCount = event.attendanceCount-1
+           db.child("event").child(event.event_id).setValue(event)
+           db.child("event").child(event.event_id).child("attendanceCount").setValue(event.attendanceCount)
+
+           // Show success message
+           val toast = Toast.makeText(applicationContext, "You are no longer registered to this event,", Toast.LENGTH_SHORT)
+           toast.show()
+           }
+        else {
+           registerUser()
+           isRegistered = true
+           register_button.setText("UNATTEND!")
+
+           // Increase count in db
+           event.attendanceCount = event.attendanceCount+1
+           db.child("event").child(event.event_id).setValue(event)
+           db.child("event").child(event.event_id).child("attendanceCount").setValue(event.attendanceCount)
+
+           val toast = Toast.makeText(applicationContext, "You are now registered to this event,", Toast.LENGTH_SHORT)
+           toast.show()
+       }
+
+    }
+
+    public fun registerUser(){
         val user = auth.currentUser
+        // Add User ID to Attendees in Event object
+        db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).setValue(user!!.uid) // https://stackoverflow.com/a/40013420
 
-        val isRegistered = isRegistered()
+        //Add Event ID to Participations in User object
+        db.child("users").child(user!!.uid).child("Participating").child(event.event_id).setValue(event.event_id)
+    }
 
-        // If not registered, add user to event
-        if(!isRegistered) {
-            Log.d("Attendees","Registering user to event")
-            // Add User ID to Attendees in Event object
-            db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).setValue(user!!.uid) // https://stackoverflow.com/a/40013420
-        }
-        else{
-            Log.d("Attendees","Removing user from event")
-            // Remove User ID from Attendees in Event object
-            db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).removeValue()// removes the value
-        }
+    public fun unregisterUser(){
+        val user = auth.currentUser
+        // Remove User ID from Attendees in Event object
+        db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).removeValue()// removes the value
+
+        //Remove Event ID from Participations in User object
+        db.child("users").child(user!!.uid).child("Participating").child(event.event_id).removeValue()
     }
 
     // Submit a report about the event

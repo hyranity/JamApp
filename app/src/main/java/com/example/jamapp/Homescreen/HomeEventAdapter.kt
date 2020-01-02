@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.jamapp.MainActivity
 import com.example.jamapp.Model.Event
 import com.example.jamapp.R
 import com.example.jamapp.event_info
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.event_item.view.*
 
 class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context) : RecyclerView.Adapter<HomeEventAdapter.ViewHolder>(){
@@ -34,6 +36,8 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
 
         holder?.textName.text = event.title
         holder?.textAddress.text = event.address
+        Picasso.get().setLoggingEnabled(true)
+        Picasso.get().load(event.imageLink).into(holder?.image) // Set the image using Picasso library
         holder.event_card.setOnClickListener{
 
             val intent = Intent(context, event_info::class.java)
@@ -47,6 +51,7 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
         val textName = itemView.findViewById(R.id.textName) as TextView
         val textAddress = itemView.findViewById(R.id.textAddress) as TextView
         val event_card = itemView.findViewById(R.id.event_card) as CardView
+        val image = itemView.findViewById(R.id.homeEventImage) as ImageView
     }
 
 

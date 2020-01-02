@@ -17,7 +17,7 @@ import com.example.jamapp.event_info
 class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.event_item, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.my_event_item, parent, false)
         return ViewHolder(view)
     }
 

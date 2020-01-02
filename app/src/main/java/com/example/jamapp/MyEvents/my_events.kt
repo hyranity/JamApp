@@ -20,9 +20,9 @@ import com.google.firebase.database.*
  */
 class my_events : Fragment() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var db : DatabaseReference
+    private lateinit var db: DatabaseReference
 
-    private lateinit var linearLayoutManager : LinearLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +32,11 @@ class my_events : Fragment() {
         // Initialize db
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().reference
-        val eventRef = db.child("event")
 
-        val rootView =  inflater.inflate(R.layout.fragment_my_events, container, false) as View
+        // Get the list of events the user is attending
+        val eventRef = db.child("users").child(auth.currentUser!!.uid).child("Participating")
+
+        val rootView = inflater.inflate(R.layout.fragment_my_events, container, false) as View
 
         val recyclerView = rootView.findViewById(R.id.MyEventsRecycler) as RecyclerView
 
@@ -46,52 +48,92 @@ class my_events : Fragment() {
         val adapter = MyEventsAdapter(events, context!!)
         recyclerView.adapter = adapter
 
-        // Get events
-        eventRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(databaseError: DatabaseError) {
-                throw databaseError.toException()
-            }
+        val eventIDs = arrayListOf<String>()
 
-            // When events are added
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Clear the list first
-                events.clear()
-
-                // Get event data
-                for (item in dataSnapshot.children) {
-                    val event = item.getValue(Event::class.java) as Event
-                            events.add(event)
+        db.child("users").child(auth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    throw databaseError.toException()
                 }
 
-                // Update adapter
-                adapter.notifyDataSetChanged()
-            }
-        })
+                override fun onDataChange(userSnapshot: DataSnapshot) {
+                    Log.e("CHECKING", "User details changed")
+                    // For each participating event
+                    eventRef.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            throw databaseError.toException()
+                        }
+
+
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            events.clear()
+                            Log.e("CHECKING", "Updating myEvents")
+                            // Get event ID
+                            for (item in dataSnapshot.children) {
+                                val eventId = item.getValue(String::class.java) as String
+
+
+                                // Get individual event details
+                                db.child("event").child(eventId)
+                                    .addValueEventListener(object : ValueEventListener {
+                                        override fun onCancelled(databaseError: DatabaseError) {
+                                            throw databaseError.toException()
+                                        }
+
+
+                                        override fun onDataChange(dataSnapshotTwo: DataSnapshot) {
+                                            // Clear the list first
+
+
+                                            val event =
+                                                dataSnapshotTwo.getValue(Event::class.java) as Event
+                                            events.add(event)
+
+
+                                            // Update adapter
+                                            adapter.notifyDataSetChanged()
+                                        }
+                                    })
+
+
+                            }
+                            // Update adapter
+                            adapter.notifyDataSetChanged()
+                        }
+
+                    })
+                    // Update adapter
+                    adapter.notifyDataSetChanged()
+                }
+
+
+            })
 
 
         // Inflate the layout for this fragment
         return rootView
     }
 
-    fun isRegistered(event : Event) : Boolean {
+    fun isRegistered(event: Event): Boolean {
         var isRegistered = false
-        val ref = db.child("event").child(event.event_id).child("Attendees").child(auth.currentUser!!.uid)
+        val ref =
+            db.child("event").child(event.event_id).child("Attendees").child(auth.currentUser!!.uid)
 
         ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(databaseError : DatabaseError) {
+            override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("Error", databaseError.toString())
             }
 
-            override fun onDataChange(snapshot : DataSnapshot) {
-                Log.d("Attendees","Checking for existence")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("Attendees", "Checking for existence")
 
                 // Check if User hasn't joined Event
                 if (!snapshot.exists()) {
-                    Log.d("Attendees","User not registered")
+                    Log.d("Attendees", "User not registered")
                     isRegistered = false
                     // Check if User has joined Event
                 } else {
-                    Log.d("Attendees","User already registered")
+                    Log.d("Attendees", "User already registered")
                     isRegistered = true
                 }
             }
@@ -100,7 +142,7 @@ class my_events : Fragment() {
         return isRegistered
     }
 
-    fun createEvent(view : View) {
+    fun createEvent(view: View) {
         // tbc
     }
 }
