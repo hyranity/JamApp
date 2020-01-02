@@ -38,6 +38,7 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
         holder?.textAddress.text = event.address
         Picasso.get().setLoggingEnabled(true)
         Picasso.get().load(event.imageLink).into(holder?.image) // Set the image using Picasso library
+        holder?.attendance.text = event.attendanceCount.toString() + " attending"
         holder.event_card.setOnClickListener{
 
             val intent = Intent(context, event_info::class.java)
@@ -52,6 +53,7 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
         val textAddress = itemView.findViewById(R.id.textAddress) as TextView
         val event_card = itemView.findViewById(R.id.event_card) as CardView
         val image = itemView.findViewById(R.id.homeEventImage) as ImageView
+        val attendance = itemView.findViewById(R.id.homeEventAttendance) as TextView
     }
 
 
