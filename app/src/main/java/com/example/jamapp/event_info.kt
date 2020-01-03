@@ -13,6 +13,7 @@ import com.example.jamapp.Model.Report
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_edit_event.*
+import kotlinx.android.synthetic.main.fragment_edit_event.view.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_report_event.*
 
@@ -48,15 +49,11 @@ class event_info : AppCompatActivity() {
 
                 // Check if User hasn't joined Event
                 if (!snapshot.hasChild(event.event_id)) {
-                    Log.d("Attendees","User not registered")
-                    Log.d("Attendees","Registering user to event")
                     isRegistered = false;
                     register_button.setText("I'M IN!")
 
                     // Check if User has joined Event
                 } else {
-                    Log.d("Attendees","User already registered")
-                    Log.d("Attendees","Removing user from event")
                     isRegistered = true;
                     register_button.setText("UNATTEND!")
                 }
@@ -151,15 +148,32 @@ class event_info : AppCompatActivity() {
         view.findNavController().navigate(R.id.action_event_to_edit_event)
     }
 
+    public fun eventBackToEventInfo(view: View) {
+        view.findNavController().navigate(R.id.action_edit_event_to_event)
+    }
+
     // For editing events
     public fun editEvent(view : View){
+
+
         // Create new event object with updated details
-        val updatedEvent = Event(event_id = event.event_id, host_id = event.host_id, address =  editEventVenue.text.toString(), title = editEventTitle.text.toString(), description =  editEventDescription.text.toString(), imageLink = editEventImageUrl.text.toString(), learnMoreLink =  editEventWebLink.text.toString(), date =  editEventDate.text.toString(), attendanceCount =  event.attendanceCount)
+        val updatedEvent = Event(
+            event_id = event.event_id,
+            host_id = event.host_id,
+            address = findViewById<EditText>(R.id.editEventVenue).text.toString(),
+            title = findViewById<EditText>(R.id.editEventTitle).text.toString(),
+            description = findViewById<EditText>(R.id.editEventDescription).text.toString(),
+            imageLink = findViewById<EditText>(R.id.editEventImageUrl).text.toString(),
+            learnMoreLink = findViewById<EditText>(R.id.editEventWebLink).text.toString(),
+            date = findViewById<EditText>(R.id.editEventDate).text.toString(),
+            attendanceCount = event.attendanceCount
+        )
 
         // Update in database
         db.child("event").child(event.event_id).setValue(updatedEvent)
 
         // Redirect
         view.findNavController().navigate(R.id.action_edit_event_to_event)
+
     }
 }

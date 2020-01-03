@@ -18,7 +18,7 @@
         android:textSize="35dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="backToMyEvents"/>
+        android:onClick="eventBackToEventInfo" />
 
     <TextView
         android:id="@+id/create_event_title"
@@ -44,6 +44,7 @@
         android:ems="10"
         android:hint="Title"
         android:inputType="textPersonName"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -62,6 +63,7 @@
         android:focusable="false"
         android:hint="Date"
         android:inputType="date"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -77,6 +79,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="Venue"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -92,6 +95,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="Description"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -107,6 +111,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="Learn more link"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -122,6 +127,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="Image link (eg. imgur)"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="25sp"

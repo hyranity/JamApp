@@ -73,7 +73,8 @@ class create_event : AppCompatActivity() {
         // Store new event under new event id
         dbRef.child("event").child(event_id).setValue(newEvent).addOnSuccessListener {
             // Show success message
-            val toast = Toast.makeText(applicationContext, "event_fragment created successfully", Toast.LENGTH_SHORT)
+            val toast =
+                Toast.makeText(applicationContext, "Event created successfully", Toast.LENGTH_SHORT)
             Log.d("event_fragment","Success")
             toast.show()
         }.addOnFailureListener {
