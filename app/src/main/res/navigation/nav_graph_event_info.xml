@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_event_to_report_event"
             app:destination="@id/report_event" />
+        <action
+            android:id="@+id/action_event_to_edit_event"
+            app:destination="@id/edit_event" />
     </fragment>
     <fragment
         android:id="@+id/report_event"
@@ -20,6 +23,14 @@
         android:label="report_event" >
         <action
             android:id="@+id/action_report_event_to_event"
+            app:destination="@id/event" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_event"
+        android:name="com.example.jamapp.edit_event"
+        android:label="edit_event" >
+        <action
+            android:id="@+id/action_edit_event_to_event"
             app:destination="@id/event" />
     </fragment>
 </navigation>

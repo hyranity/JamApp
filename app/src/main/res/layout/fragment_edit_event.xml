@@ -28,6 +28,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:text="Edit Event"
+        android:onClick="editEvent"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -35,8 +36,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/editEventTitle"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -51,8 +52,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventDate"
-        android:layout_width="wrap_content"
+        android:id="@+id/editEventDate"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -69,8 +70,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventVenue"
-        android:layout_width="wrap_content"
+        android:id="@+id/editEventVenue"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -84,8 +85,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventDescription"
-        android:layout_width="wrap_content"
+        android:id="@+id/editEventDescription"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="380dp"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -99,7 +100,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventWebLink"
+        android:id="@+id/editEventWebLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="520dp"
@@ -114,8 +115,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/createEventImageUrl"
-        android:layout_width="wrap_content"
+        android:id="@+id/editEventImageUrl"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="452dp"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -129,7 +130,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/editEventBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

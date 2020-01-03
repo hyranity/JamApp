@@ -12,6 +12,7 @@ import com.example.jamapp.Model.Event
 import com.example.jamapp.Model.Report
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_edit_event.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_report_event.*
 
@@ -36,7 +37,8 @@ class event_info : AppCompatActivity() {
         // Check if user already registered to this event or not
         val ref = db.child("users").child(auth.currentUser!!.uid).child("Participating")
 
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError : DatabaseError) {
                 Log.w("Error", databaseError.toString())
             }
@@ -143,5 +145,21 @@ class event_info : AppCompatActivity() {
 
         // Redirect
         backToEventInfo(view)
+    }
+
+    public fun redirectEditEvent(view : View){
+        view.findNavController().navigate(R.id.action_event_to_edit_event)
+    }
+
+    // For editing events
+    public fun editEvent(view : View){
+        // Create new event object with updated details
+        val updatedEvent = Event(event_id = event.event_id, host_id = event.host_id, address =  editEventVenue.text.toString(), title = editEventTitle.text.toString(), description =  editEventDescription.text.toString(), imageLink = editEventImageUrl.text.toString(), learnMoreLink =  editEventWebLink.text.toString(), date =  editEventDate.text.toString(), attendanceCount =  event.attendanceCount)
+
+        // Update in database
+        db.child("event").child(event.event_id).setValue(updatedEvent)
+
+        // Redirect
+        view.findNavController().navigate(R.id.action_edit_event_to_event)
     }
 }

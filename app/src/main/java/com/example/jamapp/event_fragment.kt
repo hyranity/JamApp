@@ -29,8 +29,8 @@ class event_fragment : Fragment() {
         db = FirebaseDatabase.getInstance().reference
 
         // Get chosen event from parent activity
-        val activity = activity as event_info
-        var event_item = activity.event
+        val thisActivity = activity as event_info
+        var event_item = thisActivity.event
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_event, container, false)
@@ -44,6 +44,9 @@ class event_fragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
                 updateFragment(view, latestEvent)
+
+                // Update the activity's event
+                (activity as event_info).event = latestEvent
             }
         })
 
