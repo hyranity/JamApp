@@ -1,5 +1,6 @@
 package com.example.jamapp
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -175,5 +176,68 @@ class event_info : AppCompatActivity() {
         // Redirect
         view.findNavController().navigate(R.id.action_edit_event_to_event)
 
+    }
+
+    public fun deleteEvent(view: View) {
+        var isClosed = false
+
+        var dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("Delete \"" + event.title + "\"?")
+        dialogBuilder.setMessage("You are going to delete this event entirely. This action is not reversible. Are you sure?")
+
+        // Set YES button
+        dialogBuilder.setPositiveButton("YES") { dialog, which ->
+
+            // Delete the event
+
+            // Store a list of attendees ID
+            var attendanceList = ArrayList<String>()
+
+            db.child("event").child(event.event_id).child("attendees")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e("Delete Attendees", databaseError.message)
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (attendee in dataSnapshot.children) {
+                            // Add each attendee to the list
+                            attendanceList.add(attendee.getValue(String::class.java) as String)
+                        }
+                    }
+                })
+
+            // Delete attendees in the event
+            db.child("event").child(event.event_id).child("attendees").removeValue()
+
+            // Loop through each attendee
+            for (attendeeID in attendanceList) {
+                // Remove the event from there
+                db.child("users").child(attendeeID).child("Participating").child(event.event_id)
+                    .removeValue()
+            }
+
+            // Delete the event itself
+            db.child("event").child(event.event_id).removeValue()
+
+            Toast.makeText(applicationContext, "Successfully deleted event", Toast.LENGTH_SHORT)
+                .show()
+
+            // Close the activity
+            finish()
+        }
+
+        dialogBuilder.setNegativeButton("NO") { dialog, which ->
+            // Cancel
+            isClosed = true
+            Toast.makeText(applicationContext, "Event not deleted", Toast.LENGTH_SHORT).show()
+        }
+
+        // Show the dialog itself
+        var dialog = dialogBuilder.show()
+
+        // Close the dialog
+        if (isClosed)
+            dialog.cancel()
     }
 }

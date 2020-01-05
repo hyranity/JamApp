@@ -42,8 +42,11 @@ class event_fragment : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
-                updateFragment(view, latestEvent)
+                if (dataSnapshot.exists()) {
+
+                    val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
+                    updateFragment(view, latestEvent)
+                }
             }
         })
 
