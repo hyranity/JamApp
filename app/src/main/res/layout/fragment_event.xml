@@ -196,6 +196,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:src="@drawable/reports"
+        android:onClick="goToViewReports"
         app:layout_constraintEnd_toStartOf="@+id/edit_button"
         app:layout_constraintStart_toEndOf="@+id/report_button"
         app:layout_constraintTop_toBottomOf="@+id/event_venue" />

@@ -65,13 +65,13 @@
         app:layout_constraintTop_toBottomOf="@+id/email_title" />
 
     <EditText
-        android:id="@+id/reason"
-        android:layout_width="wrap_content"
+        android:id="@+id/createReportTitle"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
-        android:hint="Reason"
+        android:hint="Report Title"
         android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
@@ -80,6 +80,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/report_event_title" />
+
+    <EditText
+        android:id="@+id/createReportMsg"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:ems="10"
+        android:hint="Report Message"
+        android:inputType="text"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createReportTitle" />
 
     <Button
         android:id="@+id/btn_submit"
@@ -98,6 +116,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reason" />
+        app:layout_constraintTop_toBottomOf="@+id/createReportTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

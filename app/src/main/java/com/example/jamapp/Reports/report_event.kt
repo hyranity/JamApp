@@ -1,16 +1,12 @@
-package com.example.jamapp
+package com.example.jamapp.Reports
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.jamapp.Model.Event
-import kotlinx.android.synthetic.main.fragment_report_event.*
+import com.example.jamapp.R
+import com.example.jamapp.event_info
 import kotlinx.android.synthetic.main.fragment_report_event.view.*
 
 class report_event : Fragment() {
@@ -26,7 +22,7 @@ class report_event : Fragment() {
         val event_item = activity.event
 
         view.report_event_title.text = event_item.title
-        view.reason.setText("")
+        view.createReportTitle.setText("")
 
         return view
     }

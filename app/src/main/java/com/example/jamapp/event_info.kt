@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -13,10 +12,7 @@ import com.example.jamapp.Model.Event
 import com.example.jamapp.Model.Report
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_edit_event.*
-import kotlinx.android.synthetic.main.fragment_edit_event.view.*
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.fragment_report_event.*
 
 class event_info : AppCompatActivity() {
     // Get event object from passed intent
@@ -133,9 +129,14 @@ class event_info : AppCompatActivity() {
 
     // Submit a report about the event
     public fun submitReport(view : View){
-        val reasonText = findViewById(R.id.reason) as EditText
+        val reportTitle = findViewById(R.id.createReportTitle) as EditText
+        val reportMsg = findViewById(R.id.createReportMsg) as EditText
         // Obtain report details
-        val report = Report(reporter_id = auth.currentUser!!.uid, message = reasonText.text.toString())
+        val report = Report(
+            reporter_id = auth.currentUser!!.uid,
+            title = reportTitle.text.toString(),
+            message = reportMsg.text.toString()
+        )
 
         // Push to database
         db.child("event").child(event.event_id).child("reports").push().setValue(report)
@@ -143,6 +144,14 @@ class event_info : AppCompatActivity() {
 
         // Redirect
         backToEventInfo(view)
+    }
+
+    public fun goToViewReports(view: View) {
+        view.findNavController().navigate(R.id.action_event_to_viewReports)
+    }
+
+    public fun reportsToEvent(view: View) {
+        view.findNavController().navigate(R.id.action_viewReports_to_event)
     }
 
     public fun redirectEditEvent(view : View){
