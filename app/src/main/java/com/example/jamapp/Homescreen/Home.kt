@@ -60,11 +60,9 @@ class Home : Fragment() {
                 // Clear the list first
                 events.clear()
 
-                Log.d("CHILD",dataSnapshot!!.children.count().toString())
                 // Get event data
                 for (item in dataSnapshot.children) {
                     val event = item.getValue(Event::class.java) as Event
-                    Log.d("CHILD", "LOOPING")
                     events.add(event)
                 }
 

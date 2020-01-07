@@ -13,8 +13,13 @@ import com.example.jamapp.Model.Event
 import com.example.jamapp.MyEvents.my_events
 import com.example.jamapp.R
 import com.example.jamapp.event_info
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(){
+    private var db: DatabaseReference = FirebaseDatabase.getInstance().reference
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.my_event_item, parent, false)
@@ -36,12 +41,16 @@ class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) :
             intent.putExtra("event", event) // Pass the event object
             context.startActivity(intent) // Start the event_fragment Info activity
         }
+
+        if (event.host_id == auth.currentUser!!.uid)
+            holder?.ownership.visibility = View.VISIBLE
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textName = itemView.findViewById(R.id.textName) as TextView
         val textAddress = itemView.findViewById(R.id.textAddress) as TextView
         val event_card = itemView.findViewById(R.id.event_card) as CardView
+        val ownership = itemView.findViewById(R.id.ownership) as TextView
     }
 
 }

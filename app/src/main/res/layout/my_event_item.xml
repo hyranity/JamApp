@@ -45,6 +45,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Event Title" />
 
+            <TextView
+                android:id="@+id/ownership"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:padding="7dp"
+                android:text="You own this!"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textAddress" />
+
             <!--  to be fixed-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>

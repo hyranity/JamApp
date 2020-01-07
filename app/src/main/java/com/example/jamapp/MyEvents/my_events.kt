@@ -83,12 +83,13 @@ class my_events : Fragment() {
 
                                         override fun onDataChange(dataSnapshotTwo: DataSnapshot) {
                                             // Clear the list first
+                                            events.clear()
 
-
-                                            val event =
-                                                dataSnapshotTwo.getValue(Event::class.java) as Event
-                                            events.add(event)
-
+                                            if (dataSnapshotTwo.exists()) {
+                                                val event =
+                                                    dataSnapshotTwo.getValue(Event::class.java) as Event
+                                                events.add(event)
+                                            }
 
                                             // Update adapter
                                             adapter.notifyDataSetChanged()

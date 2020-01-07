@@ -3,6 +3,7 @@ package com.example.jamapp.Attendance
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jamapp.Model.User
 import com.example.jamapp.R
@@ -12,7 +13,7 @@ class AttendanceAdapter(val attendanceList : ArrayList<User>) : RecyclerView.Ada
         parent: ViewGroup,
         viewType: Int
     ): AttendanceAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.event_item, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.attendee, parent, false)
         return AttendanceAdapter.ViewHolder(view)
     }
 
@@ -21,11 +22,12 @@ class AttendanceAdapter(val attendanceList : ArrayList<User>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: AttendanceAdapter.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val user: User = attendanceList[position]
+        holder?.attendeeName.text = user.name
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-
+        val attendeeName = itemView.findViewById<TextView>(R.id.textAttendeeName)
     }
 
 }

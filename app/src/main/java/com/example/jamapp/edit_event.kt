@@ -51,16 +51,18 @@ class edit_event : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
-                Log.d("EDIT EVENT", "Getting latest info")
-                event = latestEvent
-                // Put data into the fields
-                view.editEventTitle.setText(latestEvent.title)
-                view.editEventDate.setText(latestEvent.date)
-                view.editEventVenue.setText(latestEvent.address)
-                view.editEventDescription.setText(latestEvent.description)
-                view.editEventImageUrl.setText(latestEvent.imageLink)
-                view.editEventWebLink.setText(latestEvent.learnMoreLink)
+                if (dataSnapshot.exists()) {
+                    val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
+                    Log.d("EDIT EVENT", "Getting latest info")
+                    event = latestEvent
+                    // Put data into the fields
+                    view.editEventTitle.setText(latestEvent.title)
+                    view.editEventDate.setText(latestEvent.date)
+                    view.editEventVenue.setText(latestEvent.address)
+                    view.editEventDescription.setText(latestEvent.description)
+                    view.editEventImageUrl.setText(latestEvent.imageLink)
+                    view.editEventWebLink.setText(latestEvent.learnMoreLink)
+                }
             }
         })
 

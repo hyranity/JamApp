@@ -85,7 +85,15 @@ class create_event : AppCompatActivity() {
             toast.show()
         }
 
+        val user = auth!!.currentUser
 
+        //Make the host participate (to show event under MyEvents)
+        dbRef.child("users").child(user!!.uid).child("Participating").child(newEvent.event_id)
+            .setValue(newEvent.event_id)
+
+        // Add User ID to Attendees in Event object
+        dbRef.child("event").child(newEvent.event_id).child("Attendees").child(user!!.uid)
+            .setValue(user!!.uid) // https://stackoverflow.com/a/40013420
 
         //redirect
         finish()

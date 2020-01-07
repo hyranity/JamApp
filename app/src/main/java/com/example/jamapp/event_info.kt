@@ -77,6 +77,17 @@ class event_info : AppCompatActivity() {
         finish()
     }
 
+    // From attendance viewing back to event
+    public fun attendanceToEvent(view: View) {
+        view.findNavController().navigate(R.id.action_attendanceList_to_event)
+    }
+
+    // From event to attendance viewing
+    public fun eventToAttendance(view: View) {
+        view.findNavController().navigate(R.id.action_event_to_attendanceList)
+    }
+
+
     // When I'm In button is pressed
     public fun imIn(view : View) {
        if(isRegistered){
@@ -86,7 +97,6 @@ class event_info : AppCompatActivity() {
 
            // Decrease count in db
            event.attendanceCount = event.attendanceCount-1
-           db.child("event").child(event.event_id).setValue(event)
            db.child("event").child(event.event_id).child("attendanceCount").setValue(event.attendanceCount)
 
            // Show success message
@@ -100,7 +110,6 @@ class event_info : AppCompatActivity() {
 
            // Increase count in db
            event.attendanceCount = event.attendanceCount+1
-           db.child("event").child(event.event_id).setValue(event)
            db.child("event").child(event.event_id).child("attendanceCount").setValue(event.attendanceCount)
 
            val toast = Toast.makeText(applicationContext, "You are now registered to this event,", Toast.LENGTH_SHORT)
@@ -110,6 +119,7 @@ class event_info : AppCompatActivity() {
     }
 
     public fun registerUser(){
+        Log.d("Registering user", "To event " + event.title)
         val user = auth.currentUser
         // Add User ID to Attendees in Event object
         db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).setValue(user!!.uid) // https://stackoverflow.com/a/40013420
@@ -119,6 +129,7 @@ class event_info : AppCompatActivity() {
     }
 
     public fun unregisterUser(){
+        Log.d("UNRegistering user", "Fromo event " + event.title)
         val user = auth.currentUser
         // Remove User ID from Attendees in Event object
         db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).removeValue()// removes the value
@@ -199,10 +210,7 @@ class event_info : AppCompatActivity() {
 
             // Delete the event
 
-            // Store a list of attendees ID
-            var attendanceList = ArrayList<String>()
-
-            db.child("event").child(event.event_id).child("attendees")
+            db.child("event").child(event.event_id).child("Attendees")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.e("Delete Attendees", databaseError.message)
@@ -210,21 +218,14 @@ class event_info : AppCompatActivity() {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (attendee in dataSnapshot.children) {
-                            // Add each attendee to the list
-                            attendanceList.add(attendee.getValue(String::class.java) as String)
+                            // Delete each attendee's participation
+                            // Remove the event from there
+                            db.child("users").child(attendee.getValue(String::class.java) as String)
+                                .child("Participating").child(event.event_id)
+                                .removeValue()
                         }
                     }
                 })
-
-            // Delete attendees in the event
-            db.child("event").child(event.event_id).child("attendees").removeValue()
-
-            // Loop through each attendee
-            for (attendeeID in attendanceList) {
-                // Remove the event from there
-                db.child("users").child(attendeeID).child("Participating").child(event.event_id)
-                    .removeValue()
-            }
 
             // Delete the event itself
             db.child("event").child(event.event_id).removeValue()
