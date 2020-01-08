@@ -37,7 +37,14 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
         holder?.textName.text = event.title
         holder?.textAddress.text = event.address
         Picasso.get().setLoggingEnabled(true)
-        Picasso.get().load(event.imageLink).into(holder?.image) // Set the image using Picasso library
+
+        if (event.imageLink.isEmpty())
+            Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
+                holder?.image
+            )
+        else
+            Picasso.get().load(event.imageLink).into(holder?.image) // Set the image using Picasso library
+
         holder?.attendance.text = event.attendanceCount.toString() + " attending"
         holder.event_card.setOnClickListener{
 

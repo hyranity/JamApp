@@ -8,16 +8,20 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
 import com.example.jamapp.Model.Event
 import com.example.jamapp.Model.Report
+import com.example.jamapp.Model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_announce.*
 import kotlinx.android.synthetic.main.fragment_event.*
+import com.example.jamapp.Util.sendEmail
 
 class event_info : AppCompatActivity() {
     // Get event object from passed intent
     public lateinit var event : Event
-
+    private lateinit var emailList: ArrayList<String>
     private lateinit var db : DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var isRegistered = false
@@ -25,9 +29,10 @@ class event_info : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       // Initialize db
+        // Initialize
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().reference
+        emailList = ArrayList<String>()
 
         // Get extra
         event =  intent.getSerializableExtra("event") as Event
@@ -56,6 +61,38 @@ class event_info : AppCompatActivity() {
                 }
             }
         })
+
+        // if this is the host
+        if (event.host_id == auth.currentUser!!.uid) {
+            // Get attendees' email
+            db.child("event").child(event.event_id).child("Attendees")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e("Can't obtain attendees", databaseError.message)
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (item in dataSnapshot.children) {
+                            // For each ID
+                            val userId = item.getValue(String::class.java) as String
+                            // Get user object
+                            db.child("users").child(userId)
+                                .addValueEventListener(object : ValueEventListener {
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                        Log.e("Can't obtain attendees", databaseError.message)
+                                    }
+
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        // Add user's email
+                                        val user = dataSnapshot.getValue(User::class.java) as User
+                                        emailList.add(user.email)
+                                    }
+                                })
+                        }
+                    }
+
+                })
+        }
 
 
         setContentView(R.layout.activity_event_info)
@@ -119,7 +156,6 @@ class event_info : AppCompatActivity() {
     }
 
     public fun registerUser(){
-        Log.d("Registering user", "To event " + event.title)
         val user = auth.currentUser
         // Add User ID to Attendees in Event object
         db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).setValue(user!!.uid) // https://stackoverflow.com/a/40013420
@@ -129,7 +165,6 @@ class event_info : AppCompatActivity() {
     }
 
     public fun unregisterUser(){
-        Log.d("UNRegistering user", "Fromo event " + event.title)
         val user = auth.currentUser
         // Remove User ID from Attendees in Event object
         db.child("event").child(event.event_id).child("Attendees").child(user!!.uid).removeValue()// removes the value
@@ -173,6 +208,14 @@ class event_info : AppCompatActivity() {
         view.findNavController().navigate(R.id.action_edit_event_to_event)
     }
 
+    public fun eventToAnnounce(view: View) {
+        view.findNavController().navigate(R.id.action_event_to_announcement)
+    }
+
+    public fun announceToEvent(view: View) {
+        view.findNavController().navigate(R.id.action_announcement_to_event)
+    }
+
     // For editing events
     public fun editEvent(view : View){
 
@@ -205,6 +248,9 @@ class event_info : AppCompatActivity() {
         dialogBuilder.setTitle("Delete \"" + event.title + "\"?")
         dialogBuilder.setMessage("You are going to delete this event entirely. This action is not reversible. Are you sure?")
 
+        // Send email to affected users
+        var emailList = ArrayList<String>()
+
         // Set YES button
         dialogBuilder.setPositiveButton("YES") { dialog, which ->
 
@@ -223,9 +269,25 @@ class event_info : AppCompatActivity() {
                             db.child("users").child(attendee.getValue(String::class.java) as String)
                                 .child("Participating").child(event.event_id)
                                 .removeValue()
+
+                            // Get email of each user
+                            db.child("users").child(attendee.getValue(String::class.java) as String)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                        Log.e("Delete Attendees", databaseError.message)
+                                    }
+
+                                    override fun onDataChange(snapShot: DataSnapshot) {
+                                        val user = snapShot.getValue(User::class.java) as User
+                                        // Notify the user via email
+                                        //com.example.jamapp.Util.sendSingleEmail(this@event_info, user.email, event.title + " has been deleted.", "This event has been deleted by its owner. You have been automatically unregistered from it.", event.title +" deleted")
+                                    }
+                                })
                         }
                     }
                 })
+
+            dialog.dismiss()
 
             // Delete the event itself
             db.child("event").child(event.event_id).removeValue()
@@ -233,8 +295,7 @@ class event_info : AppCompatActivity() {
             Toast.makeText(applicationContext, "Successfully deleted event", Toast.LENGTH_SHORT)
                 .show()
 
-            // Close the activity
-            finish()
+
         }
 
         dialogBuilder.setNegativeButton("NO") { dialog, which ->
@@ -250,4 +311,33 @@ class event_info : AppCompatActivity() {
         if (isClosed)
             dialog.cancel()
     }
+
+    public fun sendEmail(view: View) {
+        val title = announce_title.text.toString()
+        val message = announce_desc.text.toString()
+
+        val email = BackgroundMail.newBuilder(this)
+            .withUsername("th3jamapp@gmail.com")
+            .withPassword("jamapp123")
+            .withType(BackgroundMail.TYPE_HTML)
+            .withBody("<h1>" + title + "</h1><br/>" + message)
+            .withSubject("Announcement for " + event.title)
+            .withOnSuccessCallback {
+                Toast.makeText(this, "Announcement successfully made", Toast.LENGTH_SHORT)
+            }
+            .withOnFailCallback {
+                Toast.makeText(this, "Announcement  failed", Toast.LENGTH_SHORT)
+            }
+
+
+        // Send to all receipients
+        for (receipientEmail in emailList) {
+            email.withMailto(receipientEmail)
+            Log.d("email", receipientEmail)
+        }
+
+        // Send email
+        email.send()
+    }
+
 }

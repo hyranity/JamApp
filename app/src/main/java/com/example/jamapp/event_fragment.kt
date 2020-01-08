@@ -46,6 +46,8 @@ class event_fragment : Fragment() {
 
                     val latestEvent = dataSnapshot.getValue(Event::class.java) as Event
                     updateFragment(view, latestEvent)
+                } else {
+                    thisActivity.finish()
                 }
             }
         })
@@ -93,6 +95,7 @@ class event_fragment : Fragment() {
             view.edit_button.isClickable = false
             view.delete_button.visibility = View.INVISIBLE
             view.delete_button.isClickable = false
+            view.announce_button.visibility = View.GONE
         } else {
             // Dont let the host register himself
             view.register_button.visibility = View.GONE

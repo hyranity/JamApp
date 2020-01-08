@@ -49,6 +49,12 @@ class MyAccount : Fragment() {
             }
 
             override fun onDataChange(snapshot : DataSnapshot) {
+                // If doesn't exists
+                if (!snapshot.exists()) {
+                    // Logout the user
+                    val activity = activity as MainActivity
+                    activity.performLogout(view)
+                }
                 // Get user data as object
                 var userData = snapshot.getValue(User::class.java)
                 user = userData!!

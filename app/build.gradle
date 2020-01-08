@@ -29,7 +29,14 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
+    // Email library thanks to @https://github.com/yesidlazaro/GmailBackground
+    implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
+
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 

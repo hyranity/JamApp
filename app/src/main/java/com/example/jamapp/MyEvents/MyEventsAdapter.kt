@@ -44,6 +44,8 @@ class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) :
 
         if (event.host_id == auth.currentUser!!.uid)
             holder?.ownership.visibility = View.VISIBLE
+        else
+            holder?.ownership.visibility = View.GONE
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
