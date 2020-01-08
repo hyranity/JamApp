@@ -14,6 +14,8 @@ import com.example.jamapp.Model.Event
 import com.example.jamapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -63,7 +65,17 @@ class Home : Fragment() {
                 // Get event data
                 for (item in dataSnapshot.children) {
                     val event = item.getValue(Event::class.java) as Event
-                    events.add(event)
+
+                    // check if event date has passed
+                    val currentDate = Calendar.getInstance() as Calendar
+                    val eventDate = Calendar.getInstance() as Calendar
+                    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+                    eventDate.time = sdf.parse(event.date)
+
+                    // if event date is today or in the future, add it to be displayed
+                    if (!eventDate.before(currentDate)) {
+                        events.add(event)
+                    }
                 }
 
                 // Reverse order from highest attendance to lowest
