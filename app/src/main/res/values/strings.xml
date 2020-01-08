@@ -8,4 +8,14 @@
     <string name="back_symbol"><![CDATA[<]]></string>
     <string name="title_activity_landing">landing</string>
     <string name="back_arrow"><![CDATA[<]]></string>
+    <string name="what_jam">What\'s Jam?</string>
+    <string name="aboutUs_desc1">View, add and apply to attend various events.</string>
+    <string name="aboutUs_desc2">Discover and join events in your area!</string>
+    <string name="aboutUs_desc3">Also goes well with peanut butter.</string>
+    <string name="contact_us">Contact Us!</string>
+    <string name="aboutUs_email_title">Email</string>
+    <string name="aboutUs_phone_title">Phone No</string>
+    <string name="aboutUs_email">enquiries@jamapp.com</string>
+    <string name="aboutUs_phoneNo">012-34567890</string>
+    <string name="createEvent_title">Title</string>
 </resources>
