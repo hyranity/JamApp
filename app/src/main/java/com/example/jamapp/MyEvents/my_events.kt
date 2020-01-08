@@ -57,7 +57,6 @@ class my_events : Fragment() {
                 }
 
                 override fun onDataChange(userSnapshot: DataSnapshot) {
-                    Log.e("CHECKING", "User details changed")
                     // For each participating event
                     eventRef.addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(databaseError: DatabaseError) {
@@ -67,11 +66,9 @@ class my_events : Fragment() {
 
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             events.clear()
-                            Log.e("CHECKING", "Updating myEvents")
                             // Get event ID
                             for (item in dataSnapshot.children) {
                                 val eventId = item.getValue(String::class.java) as String
-
 
                                 // Get individual event details
                                 db.child("event").child(eventId)
@@ -89,6 +86,11 @@ class my_events : Fragment() {
                                                 val event =
                                                     dataSnapshotTwo.getValue(Event::class.java) as Event
                                                 events.add(event)
+                                            } else {
+                                                // if the event that this user is participating does not exist, delete from the user's PARTICIPATING list
+                                                db.child("users").child(auth.currentUser!!.uid)
+                                                    .child("Participating").child(eventId)
+                                                    .removeValue()
                                             }
 
                                             // Update adapter
