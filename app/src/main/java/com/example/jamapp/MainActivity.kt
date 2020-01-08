@@ -86,7 +86,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadIcons(): Array<Int> {
-        val icons = arrayOf(R.drawable.accountwhite_24dp, R.drawable.accountwhite_24dp, R.drawable.accountwhite_24dp)
+        val icons = arrayOf(
+            R.drawable.accountwhite_24dp,
+            R.drawable.ic_event_black_24dp,
+            R.drawable.ic_event_note_black_24dp
+        )
 
         return icons
     }
@@ -136,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // VALIDATION : ensure email input is valid - https://stackoverflow.com/a/7882950
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(editAccountEmail.text).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(editAccountEmail.text.toString()).matches()) {
             val toast = Toast.makeText(applicationContext, "Your email should use the format eg. example@mail.com.", Toast.LENGTH_SHORT)
             toast.show()
             return
