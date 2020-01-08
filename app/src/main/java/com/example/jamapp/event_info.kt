@@ -17,6 +17,11 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_announce.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import com.example.jamapp.Util.sendEmail
+import kotlinx.android.synthetic.main.fragment_edit_event.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class event_info : AppCompatActivity() {
     // Get event object from passed intent
@@ -177,6 +182,28 @@ class event_info : AppCompatActivity() {
     public fun submitReport(view : View){
         val reportTitle = findViewById(R.id.createReportTitle) as EditText
         val reportMsg = findViewById(R.id.createReportMsg) as EditText
+
+        // VALIDATION : ensure all fields are filled in
+        if (reportTitle.text.isEmpty() || reportMsg.text.isEmpty()) {
+            val toast = Toast.makeText(applicationContext, "Ensure all fields are filled in.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 50 characters
+        if (reportTitle.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 50 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit msg input to 200 characters
+        if (reportMsg.text.length > 200) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 200 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
         // Obtain report details
         val report = Report(
             reporter_id = auth.currentUser!!.uid,
@@ -218,7 +245,62 @@ class event_info : AppCompatActivity() {
 
     // For editing events
     public fun editEvent(view : View){
+        // VALIDATION : ensure all fields are filled in
+        if (editEventTitle.text.isEmpty() ||
+                editEventDate.text.isEmpty() ||
+                editEventVenue.text.isEmpty() ||
+                editEventDescription.text.isEmpty() ||
+                editEventImageUrl.text.isEmpty() ||
+                editEventWebLink.text.isEmpty()) {
+            val toast = Toast.makeText(applicationContext, "Ensure all fields are filled in", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
 
+        // VALIDATION : limit title input to 50 characters
+        if (editEventTitle.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 50 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 80 characters
+        if (editEventVenue.text.length > 80) {
+            val toast = Toast.makeText(applicationContext, "Event venue should not exceed 80 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 200 characters
+        if (editEventDescription.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event description should not exceed 200 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION: ensure date input is valid
+        try {
+            val cal = Calendar.getInstance() as Calendar
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            cal.time = sdf.parse(editEventDate.text.toString())
+        } catch (ex : ParseException) {
+            val toast = Toast.makeText(applicationContext, "Date should use the format dd/MM/yyyy.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // Convert the string to calendar
+        val cal = Calendar.getInstance() as Calendar
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        cal.time = sdf.parse(editEventDate.text.toString())
+
+        // VALIDATION : ensure input date is after current date
+        val currentTime = Calendar.getInstance() as Calendar
+        if (!currentTime.before(cal)) {
+            val toast = Toast.makeText(applicationContext, "Date of event should not be before the current date.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
 
         // Create new event object with updated details
         val updatedEvent = Event(
@@ -315,6 +397,27 @@ class event_info : AppCompatActivity() {
     public fun sendEmail(view: View) {
         val title = announce_title.text.toString()
         val message = announce_desc.text.toString()
+
+        // VALIDATION : ensure all fields are filled in
+        if (announce_title.text.isEmpty() || announce_desc.text.isEmpty()) {
+            val toast = Toast.makeText(applicationContext, "Ensure all fields are filled in.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 50 characters
+        if (announce_title.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 50 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit desc input to 200 characters
+        if (announce_desc.text.length > 200) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 200 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
 
         val email = BackgroundMail.newBuilder(this)
             .withUsername("th3jamapp@gmail.com")

@@ -71,6 +71,13 @@ class LandingActivity : AppCompatActivity() {
             return
         }
 
+        // VALIDATION : ensure email input is valid - https://stackoverflow.com/a/7882950
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(registerEmail.text).matches()) {
+            val toast = Toast.makeText(applicationContext, "Your email should use the format eg. example@mail.com.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
         auth.createUserWithEmailAndPassword(registerEmail.text.toString(), passwordRegister.text.toString())
             .addOnCompleteListener(this){ task ->
                 if(task.isSuccessful){

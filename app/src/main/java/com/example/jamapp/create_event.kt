@@ -11,6 +11,7 @@ import com.example.jamapp.Model.Event
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create_event.*
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,10 +60,62 @@ class create_event : AppCompatActivity() {
     }
 
     public fun createEvent(view : View){
+        // VALIDATION : ensure all fields are filled in
+        if (createEventTitle.text.isEmpty() ||
+                createEventDate.text.isEmpty() ||
+                createEventVenue.text.isEmpty() ||
+                createEventDescription.text.isEmpty() ||
+                createEventImageUrl.text.isEmpty() ||
+                createEventWebLink.text.isEmpty()) {
+            val toast = Toast.makeText(applicationContext, "Ensure all fields are filled in", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 50 characters
+        if (createEventTitle.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event title should not exceed 50 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 50 characters
+        if (createEventVenue.text.length > 80) {
+            val toast = Toast.makeText(applicationContext, "Event venue should not exceed 80 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION : limit title input to 200 characters
+        if (createEventDescription.text.length > 50) {
+            val toast = Toast.makeText(applicationContext, "Event description should not exceed 200 characters.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
+        // VALIDATION: ensure date input is valid
+        try {
+            val cal = Calendar.getInstance() as Calendar
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            cal.time = sdf.parse(createEventDate.text.toString())
+        } catch (ex : ParseException) {
+            val toast = Toast.makeText(applicationContext, "Date should use the format dd/MM/yyyy.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+
         // Convert the string to calendar
         val cal = Calendar.getInstance() as Calendar
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         cal.time = sdf.parse(createEventDate.text.toString())
+
+        // VALIDATION : ensure input date is after current date
+        val currentTime = Calendar.getInstance() as Calendar
+        if (!currentTime.before(cal)) {
+            val toast = Toast.makeText(applicationContext, "Date of event should not be before the current date.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
 
         // create event id
         val event_id = dbRef.child("event").push().key as String
