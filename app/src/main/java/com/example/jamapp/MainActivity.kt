@@ -13,15 +13,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.jamapp.Model.Event
+import com.example.jamapp.MyEvents.MyEventsAdapter
+import com.example.jamapp.MyEvents.my_events
 import com.example.jamapp.ui.main.SectionsPagerAdapter
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_account.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -174,5 +180,11 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    public fun openAboutUs(view: View) {
+        // Open about us activity
+        startActivity(Intent(this, about_us::class.java))
+    }
+
 
 }

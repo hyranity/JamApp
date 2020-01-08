@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_event_to_announcement"
             app:destination="@id/announcement" />
+        <action
+            android:id="@+id/action_event_to_event_help"
+            app:destination="@id/event_help" />
     </fragment>
     <fragment
         android:id="@+id/report_event"
@@ -65,6 +68,15 @@
         android:label="announcement">
         <action
             android:id="@+id/action_announcement_to_event"
+            app:destination="@id/event" />
+    </fragment>
+    <fragment
+        android:id="@+id/event_help"
+        android:name="com.example.jamapp.event_help"
+        android:label="fragment_event_help"
+        tools:layout="@layout/fragment_event_help">
+        <action
+            android:id="@+id/action_event_help_to_event"
             app:destination="@id/event" />
     </fragment>
 </navigation>

@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <Button
-        android:id="@+id/register_button2"
+        android:id="@+id/closeAboutBt"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="54dp"
@@ -141,7 +141,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="backToHome"/>
+        android:onClick="closeAbout" />
 
     <TextView
         android:id="@+id/email_title"

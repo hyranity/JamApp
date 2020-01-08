@@ -41,6 +41,8 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
         Picasso.get().setLoggingEnabled(true)
 
         if (event.imageLink.isEmpty())
+
+        // This image is not by us; we are using someone else's image
             Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
                 holder?.image
             )

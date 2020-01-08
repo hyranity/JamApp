@@ -7,13 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jamapp.Homescreen.HomeEventAdapter
+import com.example.jamapp.MainActivity
 import com.example.jamapp.Model.Event
 import com.example.jamapp.R
+import com.example.jamapp.event_info
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_my_events.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,15 +34,30 @@ class my_events : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Get activity
+        val activity = activity as MainActivity
 
+        val rootView = inflater.inflate(R.layout.fragment_my_events, container, false) as View
+
+        loadMyEvents(rootView)
+
+        rootView.refreshBt.setOnClickListener {
+            loadMyEvents(rootView)
+            Toast.makeText(activity, "Refreshed your events", Toast.LENGTH_SHORT).show()
+        }
+
+
+        // Inflate the layout for this fragment
+        return rootView
+    }
+
+    public fun loadMyEvents(rootView: View) {
         // Initialize db
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().reference
 
         // Get the list of events the user is attending
         val eventRef = db.child("users").child(auth.currentUser!!.uid).child("Participating")
-
-        val rootView = inflater.inflate(R.layout.fragment_my_events, container, false) as View
 
         val recyclerView = rootView.findViewById(R.id.MyEventsRecycler) as RecyclerView
 
@@ -53,7 +72,7 @@ class my_events : Fragment() {
         val eventIDs = arrayListOf<String>()
 
         db.child("users").child(auth.currentUser!!.uid)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
                     throw databaseError.toException()
                 }
@@ -61,7 +80,7 @@ class my_events : Fragment() {
                 override fun onDataChange(userSnapshot: DataSnapshot) {
 
                     // For each participating event
-                    eventRef.addValueEventListener(object : ValueEventListener {
+                    eventRef.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(databaseError: DatabaseError) {
                             throw databaseError.toException()
                         }
@@ -84,22 +103,12 @@ class my_events : Fragment() {
 
                                         override fun onDataChange(dataSnapshotTwo: DataSnapshot) {
                                             if (dataSnapshotTwo.exists()) {
-                                                val event = dataSnapshotTwo.getValue(Event::class.java) as Event
+                                                val event =
+                                                    dataSnapshotTwo.getValue(Event::class.java) as Event
 
-                                                // check if event is in the past
-                                                val currentDate = Calendar.getInstance() as Calendar
-                                                val eventDate = Calendar.getInstance() as Calendar
-                                                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
-                                                eventDate.time = sdf.parse(event.date)
 
-                                                // if event is in the past, check if it belongs to user before adding
-                                                if (eventDate.before(currentDate)) {
-                                                    if (event.host_id.equals(auth.currentUser!!.uid)) {
-                                                        events.add(event)
-                                                    }
-                                                } else { // if event is in the future, add it
-                                                    events.add(event)
-                                                }
+                                                events.add(event)
+
                                             } else {
                                                 // if the event that this user is participating does not exist, delete from the user's PARTICIPATING list
                                                 db.child("users").child(auth.currentUser!!.uid)
@@ -125,10 +134,6 @@ class my_events : Fragment() {
 
 
             })
-
-
-        // Inflate the layout for this fragment
-        return rootView
     }
 
     fun isRegistered(event: Event): Boolean {

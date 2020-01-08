@@ -40,7 +40,7 @@ class AttendanceList : Fragment() {
         val activity = activity as event_info
         val event = activity.event
 
-        view.attendanceEventTitle.text = event.title
+        view.attendance_event_title.text = event.title
 
 
         var attendeesList = ArrayList<User>()

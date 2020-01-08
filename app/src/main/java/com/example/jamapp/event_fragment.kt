@@ -74,7 +74,9 @@ class event_fragment : Fragment() {
         // Set the views
         view.event_date.text = dateStr
         view.event_title.text = event_item.title
+        view.event_title.isSelected = true
         view.event_venue.text = event_item.address
+        view.event_venue.isSelected = true
         view.event_description.text = event_item.description
         view.event_count.setText(event_item.attendanceCount.toString() + " attending")
         view.event_learnMore.setOnClickListener{
@@ -91,6 +93,7 @@ class event_fragment : Fragment() {
         Picasso.get().load(event_item.imageLink).into(view.imageView) // Set the image using Picasso library
 
         if (event_item.imageLink.isEmpty())
+        // This image is not by us; we are using someone else's image
             Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
                 view.imageView
             )

@@ -16,6 +16,9 @@ import com.example.jamapp.event_info
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(){
     private var db: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -46,6 +49,16 @@ class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) :
             holder?.ownership.visibility = View.VISIBLE
         else
             holder?.ownership.visibility = View.GONE
+
+        // check if event is in the past
+        val currentDate = Calendar.getInstance() as Calendar
+        val eventDate = Calendar.getInstance() as Calendar
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        eventDate.time = sdf.parse(event.date)
+
+        // if event is in the past,  set it so
+        if (eventDate.before(currentDate))
+            holder?.pastStatus.text = "PAST"
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -53,6 +66,7 @@ class MyEventsAdapter(val eventList : ArrayList<Event>, val context : Context) :
         val textAddress = itemView.findViewById(R.id.textAddress) as TextView
         val event_card = itemView.findViewById(R.id.event_card) as CardView
         val ownership = itemView.findViewById(R.id.ownership) as TextView
+        val pastStatus = itemView.findViewById(R.id.PastStatus) as TextView
     }
 
 }
