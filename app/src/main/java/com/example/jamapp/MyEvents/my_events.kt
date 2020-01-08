@@ -57,6 +57,7 @@ class my_events : Fragment() {
                 }
 
                 override fun onDataChange(userSnapshot: DataSnapshot) {
+
                     // For each participating event
                     eventRef.addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(databaseError: DatabaseError) {
@@ -66,6 +67,7 @@ class my_events : Fragment() {
 
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             events.clear()
+
                             // Get event ID
                             for (item in dataSnapshot.children) {
                                 val eventId = item.getValue(String::class.java) as String
@@ -79,9 +81,6 @@ class my_events : Fragment() {
 
 
                                         override fun onDataChange(dataSnapshotTwo: DataSnapshot) {
-                                            // Clear the list first
-                                            events.clear()
-
                                             if (dataSnapshotTwo.exists()) {
                                                 val event =
                                                     dataSnapshotTwo.getValue(Event::class.java) as Event

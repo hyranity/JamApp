@@ -14,8 +14,10 @@ import com.example.jamapp.MainActivity
 import com.example.jamapp.Model.Event
 import com.example.jamapp.R
 import com.example.jamapp.event_info
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.event_item.view.*
+import java.lang.Exception
 
 class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context) : RecyclerView.Adapter<HomeEventAdapter.ViewHolder>(){
     // Code possible thanks to : Simplified Coding @ https://www.youtube.com/watch?v=67hthq6Y2J8
@@ -42,8 +44,22 @@ class HomeEventAdapter(val eventList : ArrayList<Event>,  val context : Context)
             Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
                 holder?.image
             )
-        else
-            Picasso.get().load(event.imageLink).into(holder?.image) // Set the image using Picasso library
+        else // Set the image using Picasso library
+            Picasso.get().load(event.imageLink).into(
+                holder?.image,
+                object : com.squareup.picasso.Callback {
+                    override fun onError(e: Exception?) {
+                        // Load default image
+                        Picasso.get()
+                            .load("https://screenshotlayer.com/images/assets/placeholder.png").into(
+                            holder?.image
+                        )
+                    }
+
+                    override fun onSuccess() {
+                        return
+                    }
+                })
 
         holder?.attendance.text = event.attendanceCount.toString() + " attending"
         holder.event_card.setOnClickListener{
