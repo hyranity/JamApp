@@ -93,6 +93,7 @@ class event_fragment : Fragment() {
         Picasso.get().load(event_item.imageLink).into(view.imageView) // Set the image using Picasso library
 
         if (event_item.imageLink.isEmpty())
+        // This image is not by us; we are using someone else's image
             Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
                 view.imageView
             )
