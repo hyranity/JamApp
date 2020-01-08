@@ -57,6 +57,20 @@
         app:layout_constraintTop_toBottomOf="@+id/action_title" />
 
     <!--  Testing -->
+
+    <Button
+        android:id="@+id/refresh_bt"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="#F0C28C"
+        android:text="Refresh"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/action_title"
+        tools:layout_editor_absoluteX="220dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyEventsRecycler"
         android:layout_width="411dp"
