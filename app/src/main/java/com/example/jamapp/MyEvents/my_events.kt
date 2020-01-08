@@ -76,7 +76,7 @@ class my_events : Fragment() {
 
                                 // Get individual event details
                                 db.child("event").child(eventId)
-                                    .addValueEventListener(object : ValueEventListener {
+                                    .addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onCancelled(databaseError: DatabaseError) {
                                             throw databaseError.toException()
                                         }

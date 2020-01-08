@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_event.view.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -88,6 +89,27 @@ class event_fragment : Fragment() {
         }
         Picasso.get().setLoggingEnabled(true)
         Picasso.get().load(event_item.imageLink).into(view.imageView) // Set the image using Picasso library
+
+        if (event_item.imageLink.isEmpty())
+            Picasso.get().load("https://screenshotlayer.com/images/assets/placeholder.png").into(
+                view.imageView
+            )
+        else // Set the image using Picasso library
+            Picasso.get().load(event_item.imageLink).into(
+                view.imageView,
+                object : com.squareup.picasso.Callback {
+                    override fun onError(e: Exception?) {
+                        // Load default image
+                        Picasso.get()
+                            .load("https://screenshotlayer.com/images/assets/placeholder.png").into(
+                                view.imageView
+                            )
+                    }
+
+                    override fun onSuccess() {
+                        return
+                    }
+                })
 
         // Hide certain buttons if this event is not hosted by current user
         if(event_item.host_id != auth.currentUser!!.uid) {
