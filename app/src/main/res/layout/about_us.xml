@@ -32,7 +32,8 @@
         android:textSize="30sp"
         android:textStyle="bold|italic"
         app:fontFamily="@font/viga"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"

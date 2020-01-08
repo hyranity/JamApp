@@ -83,6 +83,8 @@ class MainActivity : AppCompatActivity() {
         })
 
          */
+        // Start at the middle tab
+        viewPager.setCurrentItem(1)
     }
 
     private fun loadIcons(): Array<Int> {
