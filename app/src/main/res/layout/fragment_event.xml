@@ -190,11 +190,14 @@
         android:id="@+id/reports_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:onClick="goToViewReports"
         android:src="@drawable/reports"
         app:layout_constraintBottom_toTopOf="@+id/event_description"
+        app:layout_constraintEnd_toStartOf="@+id/edit_button"
         app:layout_constraintStart_toEndOf="@+id/report_button"
         app:layout_constraintTop_toBottomOf="@+id/event_venue" />
 
@@ -204,9 +207,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:onClick="reportEvent"
         android:src="@drawable/flag"
         app:layout_constraintBottom_toTopOf="@+id/event_description"
+        app:layout_constraintEnd_toStartOf="@+id/reports_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_venue" />
 
@@ -214,43 +220,56 @@
         android:id="@+id/edit_button"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:onClick="redirectEditEvent"
         android:src="@drawable/edit"
         app:layout_constraintBottom_toTopOf="@+id/event_description"
-        app:layout_constraintTop_toBottomOf="@+id/event_venue"
-        tools:layout_editor_absoluteX="156dp" />
+        app:layout_constraintEnd_toStartOf="@+id/delete_button"
+        app:layout_constraintStart_toEndOf="@+id/reports_button"
+        app:layout_constraintTop_toBottomOf="@+id/event_venue" />
 
     <ImageButton
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:onClick="deleteEvent"
         android:src="@drawable/delete"
         app:layout_constraintBottom_toTopOf="@+id/event_description"
-        app:layout_constraintTop_toBottomOf="@+id/event_count"
-        tools:layout_editor_absoluteX="214dp" />
+        app:layout_constraintEnd_toStartOf="@+id/announce_button"
+        app:layout_constraintStart_toEndOf="@+id/edit_button"
+        app:layout_constraintTop_toBottomOf="@+id/event_count" />
 
     <ImageButton
         android:id="@+id/announce_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
-        android:layout_marginRight="92dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:onClick="eventToAnnounce"
         android:src="@drawable/bell"
         app:layout_constraintBottom_toTopOf="@+id/event_description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/delete_button"
         app:layout_constraintTop_toBottomOf="@+id/event_count" />
 
     <ImageButton
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/help"
-        app:layout_constraintBottom_toTopOf="@+id/event_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_count" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
