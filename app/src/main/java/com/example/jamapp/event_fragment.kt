@@ -74,7 +74,9 @@ class event_fragment : Fragment() {
         // Set the views
         view.event_date.text = dateStr
         view.event_title.text = event_item.title
+        view.event_title.isSelected = true
         view.event_venue.text = event_item.address
+        view.event_venue.isSelected = true
         view.event_description.text = event_item.description
         view.event_count.setText(event_item.attendanceCount.toString() + " attending")
         view.event_learnMore.setOnClickListener{

@@ -34,7 +34,9 @@
                 app:layout_constraintBottom_toTopOf="@+id/homeEventImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textName"
-                tools:text="Address" />
+                tools:text="Address"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
             <ImageView
                 android:id="@+id/homeEventImage"
@@ -58,7 +60,9 @@
                 app:fontFamily="@font/viga"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Event Title" />
+                tools:text="Event Title"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
             <TextView
                 android:id="@+id/homeEventAttendance"
@@ -71,7 +75,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeEventImage" />
+                app:layout_constraintTop_toBottomOf="@+id/homeEventImage"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
             <!--  to be fixed-->
 

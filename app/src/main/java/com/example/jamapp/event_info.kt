@@ -243,6 +243,14 @@ class event_info : AppCompatActivity() {
         view.findNavController().navigate(R.id.action_announcement_to_event)
     }
 
+    public fun eventToHelp(view: View) {
+        view.findNavController().navigate(R.id.action_event_to_event_help)
+    }
+
+    public fun helpToEvent(view: View) {
+        view.findNavController().navigate(R.id.action_event_help_to_event)
+    }
+
     // For editing events
     public fun editEvent(view : View){
         // VALIDATION : ensure all fields are filled in

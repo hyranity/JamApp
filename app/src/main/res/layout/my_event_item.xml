@@ -31,7 +31,9 @@
                 android:textSize="18sp"
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/textName"
-                tools:text="Address" />
+                tools:text="Address"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
             <TextView
 
@@ -43,7 +45,9 @@
                 app:fontFamily="@font/viga"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Event Title" />
+                tools:text="Event Title"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
             <TextView
                 android:id="@+id/ownership"
@@ -53,11 +57,25 @@
                 android:background="@android:color/white"
                 android:padding="7dp"
                 android:text="You own this!"
+                android:visibility="gone"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textAddress" />
+
+            <TextView
+                android:id="@+id/PastStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="UPCOMING"
+                android:textColor="#A1000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ownership"
                 app:layout_constraintTop_toBottomOf="@+id/textAddress" />
 
             <!--  to be fixed-->

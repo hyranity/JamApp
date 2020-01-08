@@ -45,6 +45,7 @@
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:onClick="helpToEvent"
         app:layout_constraintEnd_toStartOf="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -83,7 +84,8 @@
 
     <TextView
         android:id="@+id/main_description"
-        android:layout_width="350"
+        android:layout_height="wrap_content"
+        android:layout_width="350dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="5dp"
@@ -125,7 +127,8 @@
 
     <TextView
         android:id="@+id/description1"
-        android:layout_width="275"
+        android:layout_height="wrap_content"
+        android:layout_width="275dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
@@ -133,7 +136,7 @@
         android:clickable="false"
         android:text="To report the event."
         android:textColor="@color/colorPrimary"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/heading2" />
@@ -150,8 +153,9 @@
         app:layout_constraintTop_toBottomOf="@+id/button1" />
 
     <TextView
+        android:layout_height="wrap_content"
         android:id="@+id/description2"
-        android:layout_width="275"
+        android:layout_width="275dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
@@ -159,7 +163,7 @@
         android:clickable="false"
         android:text="To view reports of event. (Can only be seen by event owner.)"
         android:textColor="@color/colorPrimary"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/description1" />
@@ -177,7 +181,7 @@
 
     <TextView
         android:id="@+id/description3"
-        android:layout_width="275"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
@@ -186,7 +190,7 @@
         android:clickable="false"
         android:text="To edit the event details. (Can only be seen by event owner.)"
         android:textColor="@color/colorPrimary"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/description2" />
@@ -204,7 +208,7 @@
 
     <TextView
         android:id="@+id/description4"
-        android:layout_width="275"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
@@ -213,7 +217,7 @@
         android:clickable="false"
         android:text="To delete the event. (Can only be seen by event owner.)"
         android:textColor="@color/colorPrimary"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/description3" />
@@ -231,7 +235,7 @@
 
     <TextView
         android:id="@+id/description5"
-        android:layout_width="275"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
@@ -240,7 +244,7 @@
         android:clickable="false"
         android:text="To announce the event. (Can only be seen by event owner.)"
         android:textColor="@color/colorPrimary"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/description4" />
@@ -256,7 +260,7 @@
         android:clickable="false"
         android:text="350 attending"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description5" />
@@ -272,7 +276,7 @@
         android:clickable="false"
         android:text="Click to view attendees list."
         android:textColor="@color/colorPrimary"
-        android:textSize="15"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button6"
         app:layout_constraintTop_toBottomOf="@+id/description5" />
@@ -294,7 +298,7 @@
 
     <TextView
         android:id="@+id/description7"
-        android:layout_width="175"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
@@ -303,7 +307,7 @@
         android:clickable="false"
         android:text="Click to register for the event."
         android:textColor="@color/colorPrimary"
-        android:textSize="18"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toBottomOf="@+id/description6" />

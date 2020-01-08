@@ -10,11 +10,13 @@
         android:id="@+id/event_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:layout_weight="1"
-        android:text="Events"
+        android:text="My Events"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -58,19 +60,6 @@
 
     <!--  Testing -->
 
-    <Button
-        android:id="@+id/refresh_bt"
-        android:layout_width="123dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:background="#F0C28C"
-        android:text="Refresh"
-        android:textColor="#FFFFFF"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/action_title"
-        tools:layout_editor_absoluteX="220dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyEventsRecycler"
         android:layout_width="411dp"
@@ -82,5 +71,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_title2"
         tools:listitem="@layout/my_event_item" />
+
+    <ImageButton
+        android:id="@+id/refreshBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:color/transparent"
+        android:scaleX="1.8"
+        android:scaleY="1.8"
+        android:src="@drawable/ic_refresh_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/MyEventsRecycler"
+        app:layout_constraintStart_toEndOf="@+id/event_title2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
