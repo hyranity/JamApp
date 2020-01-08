@@ -52,7 +52,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:padding="7dp"
-                android:text="You own this!"
+                android:text="@string/youOwnThis"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:visibility="gone"
