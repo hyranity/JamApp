@@ -14,6 +14,8 @@ import com.example.jamapp.Model.Event
 import com.example.jamapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -82,9 +84,22 @@ class my_events : Fragment() {
 
                                         override fun onDataChange(dataSnapshotTwo: DataSnapshot) {
                                             if (dataSnapshotTwo.exists()) {
-                                                val event =
-                                                    dataSnapshotTwo.getValue(Event::class.java) as Event
-                                                events.add(event)
+                                                val event = dataSnapshotTwo.getValue(Event::class.java) as Event
+
+                                                // check if event is in the past
+                                                val currentDate = Calendar.getInstance() as Calendar
+                                                val eventDate = Calendar.getInstance() as Calendar
+                                                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+                                                eventDate.time = sdf.parse(event.date)
+
+                                                // if event is in the past, check if it belongs to user before adding
+                                                if (eventDate.before(currentDate)) {
+                                                    if (event.host_id.equals(auth.currentUser!!.uid)) {
+                                                        events.add(event)
+                                                    }
+                                                } else { // if event is in the future, add it
+                                                    events.add(event)
+                                                }
                                             } else {
                                                 // if the event that this user is participating does not exist, delete from the user's PARTICIPATING list
                                                 db.child("users").child(auth.currentUser!!.uid)
